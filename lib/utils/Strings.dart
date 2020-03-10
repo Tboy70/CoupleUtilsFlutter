@@ -8,9 +8,14 @@ class Strings {
   static String addArticle = "Ajouter un article";
   static String itemDeleted = " \" itemName \" supprimé !";
 
-  static String addEvent = "Ajouter un événement";
+  static String endDate = "Date de fin";
   static String punctualEvent = "Ponctuel";
+  static String plannedDate = "Date prévue";
+  static String beginDate = "Date de début";
+  static String participants = "Participant(s)";
   static String timeSlotEvent = "Plage horaire";
+  static String eventName = "Nom de l\'événement";
+  static String addEvent = "Ajouter un événement";
 
   static String cancel = "Annuler";
   static String validate = "Valider";

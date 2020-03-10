@@ -1,4 +1,5 @@
-import 'package:coupleutils/presentation/widget/calendar/RadioButton.dart';
+import 'package:coupleutils/presentation/widget/calendar/AlertDialogWidget.dart';
+import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: AppBar(title: Text(widget.title)),
         drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton(
@@ -34,7 +36,7 @@ class _CalendarState extends State<Calendar> {
               children: <Widget>[
                 Text(
                   Strings.calendarTitle,
-                  style: TextStyle(fontSize: 60),
+                  style: TextStyle(fontSize: Dimens.dimens_60),
                   textAlign: TextAlign.center,
                 )
               ],
@@ -44,29 +46,10 @@ class _CalendarState extends State<Calendar> {
   }
 
   Future<dynamic> _buildDialog() {
-    TextEditingController _textFieldController = TextEditingController();
-
     return showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-              title: Text(Strings.addEvent),
-              content: Column(children: <Widget>[
-                RadioButton()]
-              ),
-              actions: <Widget>[
-                FlatButton(
-                    child: new Text(Strings.cancel),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    }),
-                FlatButton(
-                    child: new Text(Strings.validate),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    }
-                )
-              ]);
+          return AlertDialogWidget();
         });
   }
 }

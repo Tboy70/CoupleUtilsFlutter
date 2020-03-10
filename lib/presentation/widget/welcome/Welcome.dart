@@ -1,5 +1,6 @@
 import 'package:coupleutils/presentation/screen/CalendarScreen.dart';
 import 'package:coupleutils/presentation/screen/ShopListScreen.dart';
+import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,10 @@ class _WelcomeState extends State<Welcome> {
           children: <Widget>[
             Text(
               Strings.appTitle,
-              style: TextStyle(fontSize: 60),
+              style: TextStyle(fontSize: Dimens.dimens_60),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 150),
+            SizedBox(height: Dimens.dimens_150),
             FlatButton(
                 onPressed: () {
                   Navigator.push(
@@ -41,7 +42,7 @@ class _WelcomeState extends State<Welcome> {
                 textColor: Colors.white,
                 disabledColor: Colors.grey,
                 disabledTextColor: Colors.black,
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(Dimens.dimens_8),
                 splashColor: Colors.blueAccent,
                 child: Text(Strings.shopListTitle)),
             FlatButton(
@@ -55,7 +56,7 @@ class _WelcomeState extends State<Welcome> {
                 textColor: Colors.white,
                 disabledColor: Colors.grey,
                 disabledTextColor: Colors.black,
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(Dimens.dimens_8),
                 splashColor: Colors.blueAccent,
                 child: Text(Strings.calendarTitle))
           ],

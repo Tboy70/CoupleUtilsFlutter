@@ -1,7 +1,9 @@
 import 'package:coupleutils/domain/model/ShopListItem.dart';
 import 'package:coupleutils/presentation/bloc/ShopListBloc.dart';
 import 'package:coupleutils/presentation/widget/AppDrawer.dart';
+import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
+import 'package:coupleutils/utils/Values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -51,7 +53,8 @@ class _ShopListState extends State<ShopList> {
                                             .replaceFirst(
                                                 Strings.itemNamePlaceholder,
                                                 item.nameItem)),
-                                        duration: Duration(milliseconds: 500)));
+                                        duration: Duration(
+                                            milliseconds: Values.snackbar_duration_500)));
                                   });
                                 });
                               },
@@ -62,7 +65,8 @@ class _ShopListState extends State<ShopList> {
                                     color: Colors.white,
                                   ),
                                   alignment: Alignment.centerRight,
-                                  padding: EdgeInsetsDirectional.only(end: 25)),
+                                  padding: EdgeInsetsDirectional.only(
+                                      end: Dimens.dimens_25)),
                               child: ShopListCheckbox(snapshot.data[index]),
                             );
                           }))
@@ -94,13 +98,13 @@ class _ShopListState extends State<ShopList> {
                 decoration: InputDecoration(hintText: Strings.article),
               ),
               actions: <Widget>[
-                new FlatButton(
-                    child: new Text(Strings.cancel),
+                FlatButton(
+                    child: Text(Strings.cancel),
                     onPressed: () {
                       Navigator.of(context).pop();
                     }),
-                new FlatButton(
-                    child: new Text(Strings.validate),
+                FlatButton(
+                    child: Text(Strings.validate),
                     onPressed: () {
                       shopListBloc
                           .sendShopItem(_textFieldController.text)

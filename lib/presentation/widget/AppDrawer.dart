@@ -1,5 +1,6 @@
 import 'package:coupleutils/presentation/screen/CalendarScreen.dart';
 import 'package:coupleutils/presentation/screen/ShopListScreen.dart';
+import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,19 +28,10 @@ class AppDrawer extends StatelessWidget {
     return DrawerHeader(
         margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
+        child: null,
         decoration: BoxDecoration(
             image: DecorationImage(
-                fit: BoxFit.fill, image: AssetImage('images/lake.jpg'))),
-        child: Stack(children: <Widget>[
-          Positioned(
-              bottom: 12.0,
-              left: 16.0,
-              child: Text("Flutter Step-by-Step",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.w500))),
-        ]));
+                fit: BoxFit.fill, image: AssetImage('images/lake.jpg'))));
   }
 
   Widget _createDrawerItem(
@@ -49,7 +41,7 @@ class AppDrawer extends StatelessWidget {
         children: <Widget>[
           Icon(icon),
           Padding(
-            padding: EdgeInsets.only(left: 8.0),
+            padding: EdgeInsets.only(left: Dimens.dimens_8),
             child: Text(text),
           )
         ],

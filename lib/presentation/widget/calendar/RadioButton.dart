@@ -1,48 +1,62 @@
+import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
+import 'package:coupleutils/utils/Values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RadioButton extends StatefulWidget {
-  RadioButton({Key key}) : super(key: key);
+  final Function(int) callback;
+
+  RadioButton({Key key, this.callback}) : super(key: key);
 
   @override
-  _RadioButtonState createState() => _RadioButtonState();
+  RadioButtonState createState() => RadioButtonState();
 }
 
-class _RadioButtonState extends State<RadioButton> {
-  var group = 1;
+class RadioButtonState extends State<RadioButton> {
+  var group = Values.calendar_radio_button_group;
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: <Widget>[
-      Radio(
-          value: 1,
-          groupValue: group,
-          onChanged: (T) {
-            print(T);
-            setState(() {
-              group = T;
-            });
-          }),
-      new Text(
-        Strings.punctualEvent,
-        style: new TextStyle(fontSize: 12.0),
-      ),
-      Radio(
-          value: 2,
-          groupValue: group,
-          onChanged: (T) {
-            print(T);
-            setState(() {
-              group = T;
-            });
-          }),
-      new Text(
-        Strings.timeSlotEvent,
-        style: new TextStyle(
-          fontSize: 12.0,
-        ),
-      ),
-    ]);
+    return Row(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Radio(
+                  value: 1,
+                  groupValue: group,
+                  onChanged: (T) {
+                    setState(() {
+                      group = T;
+                      widget.callback(T);
+                    });
+                  }),
+              Text(
+                Strings.punctualEvent,
+                style: TextStyle(fontSize: Dimens.dimens_13),
+              )
+            ],
+          ),
+          Expanded(
+              child: Row(
+                children: <Widget>[
+                  Radio(
+                      value: 2,
+                      groupValue: group,
+                      onChanged: (T) {
+                        setState(() {
+                          group = T;
+                          widget.callback(T);
+                        });
+                      }),
+                  Text(
+                    Strings.timeSlotEvent,
+                    style: TextStyle(
+                      fontSize: Dimens.dimens_13,
+                    ),
+                  )
+                ],
+              ))
+        ]);
   }
 }
