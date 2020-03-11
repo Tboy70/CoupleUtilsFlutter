@@ -1,5 +1,6 @@
 import 'package:coupleutils/presentation/screen/CalendarScreen.dart';
 import 'package:coupleutils/presentation/screen/ShopListScreen.dart';
+import 'package:coupleutils/presentation/screen/TodoScreen.dart';
 import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +21,12 @@ class AppDrawer extends StatelessWidget {
           icon: Icons.calendar_today,
           text: Strings.calendarTitle,
           onTap: () => Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => CalendarScreen())))
+              MaterialPageRoute(builder: (context) => CalendarScreen()))),
+      _createDrawerItem(
+          icon: Icons.check_box,
+          text: Strings.todoTitle,
+          onTap: () => Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => TodoScreen())))
     ]));
   }
 

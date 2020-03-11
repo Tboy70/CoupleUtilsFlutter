@@ -1,5 +1,6 @@
 import 'package:coupleutils/data/api/API.dart';
 import 'package:coupleutils/data/mapper/ShopListItemDataMapper.dart';
+import 'package:coupleutils/data/mapper/TodoListItemDataMapper.dart';
 import 'package:coupleutils/domain/model/ClassicResponse.dart';
 import 'package:coupleutils/domain/model/ShopListItem.dart';
 import 'package:coupleutils/domain/repository/ShopListRepository.dart';
@@ -7,6 +8,7 @@ import 'package:coupleutils/domain/repository/ShopListRepository.dart';
 class ShopListRepositoryImpl extends ShopListRepository {
   final api = API();
   ShopListItemDataMapper shopListItemDataMapper = ShopListItemDataMapper();
+  TodoListItemDataMapper todoListItemDataMapper = TodoListItemDataMapper();
 
   @override
   Future<List<ShopListItem>> getShopItemList() {

@@ -1,5 +1,6 @@
 import 'package:coupleutils/presentation/screen/CalendarScreen.dart';
 import 'package:coupleutils/presentation/screen/ShopListScreen.dart';
+import 'package:coupleutils/presentation/screen/TodoScreen.dart';
 import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,37 +32,38 @@ class _WelcomeState extends State<Welcome> {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: Dimens.dimens_150),
-            FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ShopListScreen()));
-                },
-                color: Colors.blue,
-                textColor: Colors.white,
-                disabledColor: Colors.grey,
-                disabledTextColor: Colors.black,
-                padding: EdgeInsets.all(Dimens.dimens_8),
-                splashColor: Colors.blueAccent,
-                child: Text(Strings.shopListTitle)),
-            FlatButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CalendarScreen()));
-                },
-                color: Colors.blue,
-                textColor: Colors.white,
-                disabledColor: Colors.grey,
-                disabledTextColor: Colors.black,
-                padding: EdgeInsets.all(Dimens.dimens_8),
-                splashColor: Colors.blueAccent,
-                child: Text(Strings.calendarTitle))
+            CustomFlatButton(
+                textButton: Strings.shopListTitle, route: ShopListScreen()),
+            CustomFlatButton(
+                textButton: Strings.calendarTitle, route: CalendarScreen()),
+            CustomFlatButton(textButton: Strings.todoTitle, route: TodoScreen())
           ],
         ),
       ),
     ));
+  }
+}
+
+class CustomFlatButton extends StatelessWidget {
+  final String textButton;
+  final StatelessWidget route;
+
+  CustomFlatButton({Key key, @required this.textButton, @required this.route})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FlatButton(
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => this.route));
+        },
+        color: Colors.blue,
+        textColor: Colors.white,
+        disabledColor: Colors.grey,
+        disabledTextColor: Colors.black,
+        padding: EdgeInsets.all(Dimens.dimens_8),
+        splashColor: Colors.blueAccent,
+        child: Text(this.textButton));
   }
 }

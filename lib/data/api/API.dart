@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:coupleutils/data/entity/ShopListItemEntity.dart';
+import 'package:coupleutils/data/entity/TodoListItemEntity.dart';
 import 'package:coupleutils/data/mapper/ShopListItemDataMapper.dart';
+import 'package:coupleutils/data/mapper/TodoListItemDataMapper.dart';
 import 'package:coupleutils/domain/model/ClassicResponse.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -33,5 +35,10 @@ class API {
       'http://thomasboy.fr/couple_utils_api/public/updateShopItem/$idItem',
     );
     return compute(parseUpdateShopItemResponse, response.body);
+  }
+
+  Future<List<TodoListItemEntity>> fetchTodoItemsList() async {
+    final response = await http.Client().get(BASE_URL + 'shopItemList');
+    return compute(parseTodoListItem, response.body);
   }
 }

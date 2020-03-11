@@ -1,41 +1,38 @@
-import 'package:coupleutils/domain/model/ShopListItem.dart';
-import 'package:coupleutils/presentation/bloc/ShopListBloc.dart';
-import 'package:coupleutils/presentation/widget/AppDrawer.dart';
+import 'package:coupleutils/domain/model/TodoListItem.dart';
+import 'package:coupleutils/presentation/bloc/TodoListBloc.dart';
+import 'package:coupleutils/presentation/widget/todolist/TodoListCheckbox.dart';
 import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
-import 'package:coupleutils/utils/Values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
-import 'ShopListCheckbox.dart';
+import '../AppDrawer.dart';
 
-/// ShopList stateful widget
-class ShopList extends StatefulWidget {
-  ShopList({Key key, this.title}) : super(key: key);
-
+class TodoList extends StatefulWidget {
   final String title;
 
+  TodoList({Key key, this.title}) : super(key: key);
+
   @override
-  _ShopListState createState() => _ShopListState();
+  _TodoListState createState() => _TodoListState();
 }
 
-class _ShopListState extends State<ShopList> {
-  var shopListBloc = ShopListBloc();
+class _TodoListState extends State<TodoList> {
+  var todoListBloc = TodoListBloc();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text(widget.title)),
         drawer: AppDrawer(),
-        body: FutureBuilder<List<ShopListItem>>(
-            future: shopListBloc.fetchShopItemsList(),
+        body: FutureBuilder<List<TodoListItem>>(
+            future: todoListBloc.fetchTodoItemsList(),
             builder: (context, snapshot) {
               if (snapshot.hasError) print(snapshot.error);
 
               return snapshot.hasData
                   ? RefreshIndicator(
-                      onRefresh: _refreshShopItemList,
+                      onRefresh: _refreshTodoItemList,
                       child: snapshot.data.isEmpty
                           ? PageView(
                               scrollDirection: Axis.vertical,
@@ -58,23 +55,7 @@ class _ShopListState extends State<ShopList> {
                                 final item = snapshot.data[index];
                                 return Dismissible(
                                   key: Key(item.idItem),
-                                  onDismissed: (direction) {
-                                    shopListBloc
-                                        .deleteShopItem(item.idItem)
-                                        .then((onValue) {
-                                      setState(() {
-                                        snapshot.data.removeAt(index);
-                                        Scaffold.of(context).showSnackBar(SnackBar(
-                                            content: Text(Strings.itemDeleted
-                                                .replaceFirst(
-                                                    Strings.itemNamePlaceholder,
-                                                    item.nameItem)),
-                                            duration: Duration(
-                                                milliseconds: Values
-                                                    .snackbar_duration_500)));
-                                      });
-                                    });
-                                  },
+                                  onDismissed: (direction) {},
                                   background: Container(
                                       color: Colors.red,
                                       child: Icon(
@@ -84,20 +65,20 @@ class _ShopListState extends State<ShopList> {
                                       alignment: Alignment.centerRight,
                                       padding: EdgeInsetsDirectional.only(
                                           end: Dimens.dimens_25)),
-                                  child: ShopListCheckbox(snapshot.data[index]),
+                                  child: TodoListCheckbox(snapshot.data[index]),
                                 );
                               }))
                   : Center(child: CircularProgressIndicator());
             }),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            return _buildDialog();
+            _buildDialog();
           },
           child: Icon(Icons.add),
         ));
   }
 
-  Future<void> _refreshShopItemList() async {
+  Future<void> _refreshTodoItemList() async {
     setState(() {});
     return null;
   }
@@ -109,10 +90,10 @@ class _ShopListState extends State<ShopList> {
         context: context,
         builder: (context) {
           return AlertDialog(
-              title: Text(Strings.addArticle),
+              title: Text(Strings.addTodoThing),
               content: TextField(
                 controller: _textFieldController,
-                decoration: InputDecoration(hintText: Strings.article),
+                decoration: InputDecoration(hintText: Strings.todoThing),
               ),
               actions: <Widget>[
                 FlatButton(
@@ -120,18 +101,7 @@ class _ShopListState extends State<ShopList> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     }),
-                FlatButton(
-                    child: Text(Strings.validate),
-                    onPressed: () {
-                      shopListBloc
-                          .sendShopItem(_textFieldController.text)
-                          .then((value) {
-                        Navigator.of(context).pop();
-                        setState(() {
-                          _refreshShopItemList();
-                        });
-                      }).catchError(print);
-                    }),
+                FlatButton(child: Text(Strings.validate), onPressed: () {}),
               ]);
         });
   }

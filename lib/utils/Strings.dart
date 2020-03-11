@@ -1,6 +1,7 @@
 class Strings {
   static String appTitle = "Couple Utils";
   static String calendarTitle = "Calendrier";
+  static String todoTitle = "A faire";
   static String shopListTitle = "Liste de courses";
 
   static String article = "Article";
@@ -17,6 +18,10 @@ class Strings {
   static String eventName = "Nom de l\'événement";
   static String addEvent = "Ajouter un événement";
 
+  static String addTodoThing = "Ajouter une chose à faire";
+  static String todoThing = "Chose à faire";
+
   static String cancel = "Annuler";
   static String validate = "Valider";
+  static String noDataFound = "Pas de données trouvées";
 }
