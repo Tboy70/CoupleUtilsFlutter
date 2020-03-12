@@ -3,6 +3,7 @@ import 'package:coupleutils/presentation/bloc/TodoListBloc.dart';
 import 'package:coupleutils/presentation/widget/todolist/TodoListCheckbox.dart';
 import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
+import 'package:coupleutils/utils/Values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -55,7 +56,23 @@ class _TodoListState extends State<TodoList> {
                                 final item = snapshot.data[index];
                                 return Dismissible(
                                   key: Key(item.idItem),
-                                  onDismissed: (direction) {},
+                                  onDismissed: (direction) {
+                                    todoListBloc
+                                        .deleteTodoItem(item.idItem)
+                                        .then((onValue) {
+                                      setState(() {
+                                        snapshot.data.removeAt(index);
+                                        Scaffold.of(context).showSnackBar(SnackBar(
+                                            content: Text(Strings.itemDeleted
+                                                .replaceFirst(
+                                                    Strings.itemNamePlaceholder,
+                                                    item.nameItem)),
+                                            duration: Duration(
+                                                milliseconds: Values
+                                                    .snackbar_duration_500)));
+                                      });
+                                    });
+                                  },
                                   background: Container(
                                       color: Colors.red,
                                       child: Icon(
@@ -101,7 +118,18 @@ class _TodoListState extends State<TodoList> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     }),
-                FlatButton(child: Text(Strings.validate), onPressed: () {}),
+                FlatButton(
+                    child: Text(Strings.validate),
+                    onPressed: () {
+                      todoListBloc
+                          .sendTodoItem(_textFieldController.text)
+                          .then((value) {
+                        Navigator.of(context).pop();
+                        setState(() {
+                          _refreshTodoItemList();
+                        });
+                      }).catchError(print);
+                    }),
               ]);
         });
   }

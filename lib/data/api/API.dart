@@ -11,6 +11,8 @@ import 'package:http/http.dart' as http;
 class API {
   static const String BASE_URL = "http://thomasboy.fr/couple_utils_api/public/";
 
+  /// SHOP LIST
+
   Future<List<ShopListItemEntity>> fetchShopItemsList() async {
     final response = await http.Client().get(BASE_URL + 'shopItemList');
     return compute(parseShopListItem, response.body);
@@ -25,20 +27,45 @@ class API {
 
   Future<bool> deleteShopItemById(String idItem) async {
     final response = await http.Client().post(
-      BASE_URL + 'deleteItemById/$idItem',
+      BASE_URL + 'deleteShopItemById/$idItem',
     );
     return compute(parseDeleteShopItemResponse, response.body);
   }
 
   Future<bool> updateShopItemById(String idItem) async {
     final response = await http.Client().patch(
-      'http://thomasboy.fr/couple_utils_api/public/updateShopItem/$idItem',
+        BASE_URL + 'updateShopItem/$idItem',
     );
     return compute(parseUpdateShopItemResponse, response.body);
   }
 
+  /// _TODO LIST
+
   Future<List<TodoListItemEntity>> fetchTodoItemsList() async {
-    final response = await http.Client().get(BASE_URL + 'shopItemList');
+    final response = await http.Client().get(BASE_URL + 'todoItemList');
     return compute(parseTodoListItem, response.body);
   }
+
+  Future<ClassicResponse> sendTodoItem(String text) async {
+    final response = await http.Client()
+        .post(BASE_URL + 'addTodoItem', body: json.encode({'nameItem': text}));
+
+    return compute(parseSendItemResponse, response.body);
+  }
+
+  Future<bool> deleteTodoItemById(String idItem) async {
+    final response = await http.Client().post(
+      BASE_URL + 'deleteTodoItemById/$idItem',
+    );
+    return compute(parseDeleteTodoItemResponse, response.body);
+  }
+
+  Future<bool> updateTodoItemById(String idItem) async {
+    final response = await http.Client().patch(
+      BASE_URL + 'updateTodoItem/$idItem',
+    );
+    return compute(parseUpdateTodoItemResponse, response.body);
+  }
+
+
 }

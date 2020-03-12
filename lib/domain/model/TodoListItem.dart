@@ -1,22 +1,14 @@
 class TodoListItem {
   final String idItem;
   final String nameItem;
-  final String boughtItem;
-//  final String doneItem;
+  final String doneItem;
 
-  TodoListItem({this.idItem, this.nameItem, this.boughtItem});
+  TodoListItem({this.idItem, this.nameItem, this.doneItem});
 
   factory TodoListItem.fromJson(Map<String, dynamic> json) {
     return TodoListItem(
         idItem: json['idItem'],
         nameItem: json['nameItem'],
-        boughtItem: json['boughtItem']);
+        doneItem: json['doneItem']);
   }
-
-//  factory TodoListItem.fromJson(Map<String, dynamic> json) {
-//    return TodoListItem(
-//        idItem: json['idItem'],
-//        nameItem: json['nameItem'],
-//        boughtItem: json['doneItem']);
-//  }
 }

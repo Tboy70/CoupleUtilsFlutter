@@ -26,6 +26,13 @@ class _TodoListCheckboxState extends State<TodoListCheckbox> {
               decoration: lineThrough ? TextDecoration.lineThrough : null),
         ),
         value: checkedBox,
-        onChanged: (bool value) {});
+        onChanged: (bool value) {
+          todoListBloc.updateTodoItem(widget.todoItem.idItem).then((onValue) {
+            setState(() {
+              checkedBox = value;
+              lineThrough = value;
+            });
+          });
+        });
   }
 }

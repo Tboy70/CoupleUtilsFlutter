@@ -10,6 +10,14 @@ List<TodoListItemEntity> parseTodoListItem(String responseBody) {
       .toList();
 }
 
+bool parseDeleteTodoItemResponse(String responseBody) {
+  return true;
+}
+
+bool parseUpdateTodoItemResponse(String responseBody) {
+  return true;
+}
+
 class TodoListItemDataMapper {
   List<TodoListItem> transformEntityToModel(
       List<TodoListItemEntity> todoItemListEntity) {
@@ -18,8 +26,7 @@ class TodoListItemDataMapper {
       todoListItem.add(TodoListItem(
         idItem: element.idItem,
         nameItem: element.nameItem,
-        boughtItem: element.boughtItem,
-//        doneItem: element.doneItem,
+        doneItem: element.doneItem,
       ));
     });
     return todoListItem;
