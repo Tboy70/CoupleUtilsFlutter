@@ -17,7 +17,8 @@ class DateSelectionWidget extends StatefulWidget {
 }
 
 class _DateSelectionWidgetState extends State<DateSelectionWidget> {
-  static const WANTED_FORMAT = 'dd/MM/yyyy';
+  static const FRENCH_FORMAT = 'dd/MM/yyyy';
+  static const DEFAULT_FORMAT = 'yyyy-MM-dd';
 
   var dateSelectionController = TextEditingController();
   var dateSelectionControllerEnd = TextEditingController();
@@ -37,8 +38,8 @@ class _DateSelectionWidgetState extends State<DateSelectionWidget> {
           _buildDatePicker((dateTime) {
             setState(() {
               dateSelectionController.text =
-                  DateFormat(WANTED_FORMAT).format(dateTime);
-              widget.callback(dateSelectionController.text);
+                  DateFormat(FRENCH_FORMAT).format(dateTime);
+              widget.callback(DateFormat(DEFAULT_FORMAT).format(dateTime));
             });
           });
         },
@@ -59,8 +60,8 @@ class _DateSelectionWidgetState extends State<DateSelectionWidget> {
                   _buildDatePicker((dateTime) {
                     setState(() {
                       dateSelectionControllerBegin.text =
-                          DateFormat(WANTED_FORMAT).format(dateTime);
-                      widget.callback(dateSelectionControllerBegin.text);
+                          DateFormat(FRENCH_FORMAT).format(dateTime);
+                      widget.callback(DateFormat(DEFAULT_FORMAT).format(dateTime));
                     });
                   });
                 }),
@@ -77,8 +78,8 @@ class _DateSelectionWidgetState extends State<DateSelectionWidget> {
                     _buildDatePicker((dateTime) {
                       setState(() {
                         dateSelectionControllerEnd.text =
-                            DateFormat(WANTED_FORMAT).format(dateTime);
-                        widget.callback(dateSelectionControllerEnd.text);
+                            DateFormat(FRENCH_FORMAT).format(dateTime);
+                        widget.callback(DateFormat(DEFAULT_FORMAT).format(dateTime));
                       });
                     });
                   }))

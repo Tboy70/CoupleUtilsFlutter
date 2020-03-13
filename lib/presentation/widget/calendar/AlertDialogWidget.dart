@@ -1,3 +1,4 @@
+import 'package:coupleutils/presentation/bloc/CalendarBloc.dart';
 import 'package:coupleutils/utils/Dimens.dart';
 import 'package:coupleutils/utils/Strings.dart';
 import 'package:coupleutils/utils/Values.dart';
@@ -7,13 +8,18 @@ import 'DateSelectionWidget.dart';
 import 'RadioButton.dart';
 
 class AlertDialogWidget extends StatefulWidget {
-  AlertDialogWidget({Key key}) : super(key: key);
+
+  final Function(bool) callback;
+
+  AlertDialogWidget({Key key, this.callback}) : super(key: key);
 
   @override
   _AlertDialogWidgetState createState() => _AlertDialogWidgetState();
 }
 
 class _AlertDialogWidgetState extends State<AlertDialogWidget> {
+  CalendarBloc calendarBloc = CalendarBloc();
+
   // Radio button stuff
   var retrievedRadioButtonValue = 1;
 
@@ -25,14 +31,14 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
   List<DropdownMenuItem<String>> _dropDownMenuItems;
 
   // User inputs
-  String _currentUser;
   String _currentEventName;
+  String _currentParticipant;
   String _currentPlannedDate;
 
   @override
   void initState() {
     _dropDownMenuItems = _getDropDownMenuItems();
-    _currentUser = null;
+    _currentParticipant = null;
     super.initState();
   }
 
@@ -67,7 +73,7 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
                       hintText: Strings.eventName)),
               SizedBox(height: Dimens.dimens_20),
               DropdownButton(
-                  value: _currentUser,
+                  value: _currentParticipant,
                   hint: Text(Strings.participants),
                   items: _dropDownMenuItems,
                   onChanged: changedDropDownItem)
@@ -83,7 +89,16 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
               disabledTextColor: Colors.grey,
               onPressed: _checkInfoForm(retrievedRadioButtonValue) == true
                   ? () {
-                      Navigator.of(context).pop();
+                      calendarBloc
+                          .sendEvent(
+                              _currentEventName,
+                              retrievedRadioButtonValue,
+                              _currentPlannedDate,
+                              _currentParticipant)
+                          .then((value) {
+                        Navigator.of(context).pop();
+                        widget.callback(true);
+                      }).catchError(print);
                     }
                   : null)
         ]);
@@ -100,12 +115,12 @@ class _AlertDialogWidgetState extends State<AlertDialogWidget> {
 
   void changedDropDownItem(String selectedUser) {
     setState(() {
-      _currentUser = selectedUser;
+      _currentParticipant = selectedUser;
     });
   }
 
   bool _checkInfoForm(int retrieveRadioButtonValue) =>
-      _currentUser != null &&
+      _currentParticipant != null &&
       _currentEventName.isNotEmpty &&
       _currentPlannedDate != null &&
       _currentPlannedDate.isNotEmpty;

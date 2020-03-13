@@ -17,11 +17,14 @@ class ShopListRepositoryImpl extends ShopListRepository {
     });
   }
 
+  @override
   Future<ClassicResponse> sendShopItem(String text) => api.sendShopItem(text);
 
+  @override
   Future<bool> deleteShopItemById(String idItem) =>
       api.deleteShopItemById(idItem);
 
+  @override
   Future<bool> updateShopItemById(String idItem) =>
       api.updateShopItemById(idItem);
 }
